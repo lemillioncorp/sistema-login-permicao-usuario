@@ -6,7 +6,7 @@
     <title>Login - Acesso ao Sistema</title>
 </head>
 <body>
-    <form action="login.php" method="post">
+    <form action="cloud/Login.php" method="post">
     
     <input type="email" name="in_email" id="" placeholder="E-mail de Login" required>
     <input type="password" name="in_senha" id="" placeholder="Senha de Acesso" required>

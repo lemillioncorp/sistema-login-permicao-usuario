@@ -11,7 +11,8 @@ if (isset($_POST['send'])){
     
         //Teste de recepção dos dados
        // echo "Seu email é {$usuario_email} e sua senha é {$usuario_senha}";
-            $busca = "SELECT * FROM acess WHERE email = :usuario AND senha = :pass ";
+            //$busca = "SELECT * FROM acess WHERE email = :usuario AND senha = :pass";
+            $busca = "SELECT * FROM acess ac JOIN user us ON ac.cod_user = us.id_user WHERE us.nome_user = :usuario AND  us.user_pass = :pass";
 
             $enconta = $pdo ->prepare($busca);
             $enconta->bindValue(":usuario",$usuario_email);
@@ -22,8 +23,8 @@ if (isset($_POST['send'])){
 
                         while ($percorrer = $enconta->fetch(PDO::FETCH_ASSOC)) {
                             //Variavel que Armazena tipo de Usuarios e nome do Usuário
-                            $adm = $percorrer['adm'];
-                            $nome = $percorrer['nome'];
+                            $adm = $percorrer['ac.adm'];
+                            $nome = $percorrer['us.nome_user'];
 
                             session_start(); 
 
@@ -32,12 +33,12 @@ if (isset($_POST['send'])){
                                     $_SESSION['super'] = $nome;
                                   
                                   //  echo "Este usuário é Admninistrador";
-                                    echo "<script>window.location = 'painel.php'</script>";
+                                    echo "<script>window.location = cloud/admin/painel.php'</script>";
                                 }
                                 elseif ($adm == 2 ){
                                     $_SESSION['editor'] = $nome;
 
-                                    echo "<script>window.location = 'painelEditor.php'</script>";
+                                    echo "<script>window.location = 'cloud/editor/painelEditor.php'</script>";
                                    // echo "Este usuário é Editor";
                                    
                                 }
@@ -45,7 +46,7 @@ if (isset($_POST['send'])){
                                     $_SESSION['normal'] = $nome;
                                   
                                   //  echo "Este usuário é Normal";
-                                  echo "<script>window.location = 'painelNormal.php'</script>";
+                                  echo "<script>window.location = 'cloud/normal/painelNormal.php'</script>";
                                     
                                 }
 
@@ -54,7 +55,7 @@ if (isset($_POST['send'])){
                     }
                     else{
                         echo "<script>window.alert('User not Found - Create new Accont')</script>";
-                        echo "<script>window.location = 'index.php'</script>"; 
+                        echo "<script>window.location = '../index.php'</script>"; 
                     }
     
     } catch (MysqlExepction $alert) {

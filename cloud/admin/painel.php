@@ -25,7 +25,7 @@ session_start();
     <?php  
 
      $pdo = new PDO("mysql:host=localhost;dbname=person", "root","");
-     $query = "SELECT * FROM acess";
+     $query = "SELECT * FROM acess ac JOIN user us ON ac.cod_user = us.id_user";
     $query = $pdo ->prepare($query);
     $query->execute();
 
